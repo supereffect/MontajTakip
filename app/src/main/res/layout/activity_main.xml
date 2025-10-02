@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Bölüm 1 -->
+        <TextView
+            android:text="Bölüm 1 - Yere Al"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etBarcode1"
+                android:hint="Barkod"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:padding="10dp"/>
+
+            <Button
+                android:id="@+id/btnScan1"
+                android:text="📷"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spHat1"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/etReason"
+            android:hint="Yere alma nedeni"
+            android:layout_marginTop="12dp"
+            android:minLines="3"
+            android:gravity="top|start"
+            android:background="@drawable/edittext_background"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/chkRemoved"
+                android:text="Söküldü mü?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btnYereAl"
+                android:text="Yere Al"
+                android:layout_marginStart="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+
+        <!-- Bölüm 2 -->
+        <TextView
+            android:text="Bölüm 2 - Hatta Yükle"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etBarcode2"
+                android:hint="Barkod"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:padding="10dp"/>
+
+            <Button
+                android:id="@+id/btnScan2"
+                android:text="📷"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spHat2"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnHattaYukle"
+            android:text="Hatta Yükle"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
+
+        <!-- Geçmiş Sayfasına Gitme -->
+        <Button
+            android:id="@+id/btnHistory"
+            android:text="📑 Kayıtlar"
+            android:layout_marginTop="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+</ScrollView>

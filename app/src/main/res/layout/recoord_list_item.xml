@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@android:color/white"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Kayıt Bilgisi -->
+    <TextView
+        android:id="@+id/tvRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/colorTextPrimary"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Düzenle / Sil Butonları -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:text="✏️ Düzenle"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:text="🗑️ Sil"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

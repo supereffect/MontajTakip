@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#43A047</color>         <!-- Modern yeşil -->
+    <color name="colorPrimaryVariant">#2E7D32</color>  <!-- Daha koyu yeşil -->
+    <color name="colorAccent">#546E7A</color>          <!-- Soft gri-mavi vurgu -->
+
+    <!-- Arka plan ve yazı renkleri -->
+    <color name="colorBackground">#F5F5F5</color>     <!-- Daha nötr açık gri -->
+    <color name="colorSurface">#FFFFFF</color>        <!-- Beyaz yüzeyler -->
+    <color name="colorTextPrimary">#212121</color>    <!-- Koyu gri yazı -->
+    <color name="colorTextSecondary">#616161</color>  <!-- Orta koyulukta gri -->
+
+    <!-- Buton ve vurgu renkleri -->
+    <color name="colorButton">#43A047</color>
+    <color name="colorButtonText">#FFFFFF</color>
+</resources>

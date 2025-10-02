@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Kullanıcı -->
+        <TextView
+            android:text="Kullanıcı"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp" />
+
+        <!-- İşlem Tipi -->
+        <TextView
+            android:text="İşlem Tipi"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp" />
+
+        <!-- Barkod -->
+        <TextView
+            android:text="Barkod"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etBarcode"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:padding="8dp" />
+
+            <Button
+                android:id="@+id/btnScanBarcode"
+                android:text="📷"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Hat -->
+        <TextView
+            android:text="Hat"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etHat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp" />
+
+        <!-- Neden -->
+        <TextView
+            android:text="Neden"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="8dp"
+            android:minLines="3"
+            android:gravity="top|start" />
+
+        <!-- Kaydet Butonu -->
+        <Button
+            android:id="@+id/btnSave"
+            android:text="Kaydet"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+</ScrollView>
