@@ -74,10 +74,19 @@ public class RecordRepository {
         }
 
         // Yeni Document Reference oluştur (Firestore ID alınacak)
-        String docId = historyRef.document().getId();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Record record = new Record(docId, user.getEmail(), type, barcode, hat, reason, timestamp, shift);
+//        String docId = historyRef.document().getId();
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        Record record = new Record(docId, user.getEmail(), type, barcode, hat, reason, timestamp, shift);
 
+
+
+        String docId = historyRef.document().getId();
+
+// SharedPreferences'ten email al
+        SharedPreferences prefs = context.getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        String email = prefs.getString("email", "unknown@montaj.com"); // default değer
+
+        Record record = new Record(docId, email, type, barcode, hat, reason, timestamp, shift);
         // Güncel kayıtlar
         recordsRef.document(barcode)
                 .set(record)

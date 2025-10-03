@@ -8,133 +8,68 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.bumptech.glide.Glide;
+import com.egehan.montajhattitakip.MyApp;
 import com.egehan.montajhattitakip.R;
-import com.egehan.montajhattitakip.Repository.Concrete.AuthRepository;
-import com.egehan.montajhattitakip.Repository.Abstract.IRepositoryCallback;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
-
-@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
     EditText etEmail, etPassword;
-    Button btnLogin, btnRegister, btnForgotPassword;
+    Button btnLogin;
     TextView tvErrorMessage;
 
-    @Inject
-    AuthRepository authRepository;
-
     SharedPreferences sharedPreferences;
+
+    // Tek kullanıcı
+    private static final String DEFAULT_EMAIL = "admin@montaj.com";
+    private static final String DEFAULT_PASSWORD = "123456";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        ImageView bgImage = findViewById(R.id.bgImage);
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        try {
+            Glide.with(this)
+                    .load(MyApp.getWallpaperUrl())
+                    .into(bgImage);
+        } catch (Exception e) {
+            var asdas = e;
+        }
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        btnRegister = findViewById(R.id.btnRegister);
-        btnForgotPassword = findViewById(R.id.btnForgotPassword);
         tvErrorMessage = findViewById(R.id.tvErrorMessage);
 
         sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
-        // Daha önce girilmiş bilgiler varsa otomatik doldur
-        etEmail.setText(sharedPreferences.getString("email", ""));
-        etPassword.setText(sharedPreferences.getString("password", ""));
+        // Daha önce login olmuşsa direkt MainActivity aç
+        String savedEmail = sharedPreferences.getString("email", null);
 
-        // LOGIN
+        etEmail.setText(savedEmail);
         btnLogin.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+
+            String email = String.valueOf(etEmail.getText());
+            String password = DEFAULT_PASSWORD;
 
             if (!validateInput(email, password)) return;
 
-            authRepository.login(email, password, new IRepositoryCallback<FirebaseUser>() {
-                @Override
-                public void onStart() {}
-
-                @Override
-                public void onComplete(FirebaseUser user) {
-                    if (user != null) {
-                        if (user.isEmailVerified()) {
-                            saveCredentials(email, password);
-                            goToMain();
-                        } else {
-                            FirebaseAuth.getInstance().signOut();
-                            showError("Email adresiniz doğrulanmamış. Lütfen mailinizi kontrol edin.");
-                        }
-                    }
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    showError("Giriş başarısız: " + e.getMessage());
-                }
-            });
-        });
-
-        // REGISTER
-        btnRegister.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
-
-            if (!validateInput(email, password)) return;
-
-            authRepository.register(email, password, new IRepositoryCallback<FirebaseUser>() {
-                @Override
-                public void onStart() {}
-
-                @Override
-                public void onComplete(FirebaseUser user) {
-                    if (user != null) {
-                        user.sendEmailVerification()
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        showError("Kayıt başarılı! Lütfen e-posta adresinizi doğrulayın.");
-                                    } else {
-                                        showError("Kayıt başarılı ama doğrulama maili gönderilemedi.");
-                                    }
-                                });
-                        saveCredentials(email, password);
-                    }
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    showError("Kayıt başarısız: " + e.getMessage());
-                }
-            });
-        });
-
-        // RESET PASSWORD
-        btnForgotPassword.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim();
-            if (TextUtils.isEmpty(email)) {
-                etEmail.setError("Lütfen email adresinizi girin");
-                etEmail.requestFocus();
-                return;
+            if (password.equals(DEFAULT_PASSWORD))
+//            if (email.equals(DEFAULT_EMAIL) && password.equals(DEFAULT_PASSWORD))
+            {
+                saveCredentials(email);
+                goToMain();
+            } else {
+                showError("Kullanıcı adı veya şifre yanlış!");
             }
-
-            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            showError("Şifre sıfırlama linki mail adresinize gönderildi.");
-                        } else {
-                            showError("Şifre sıfırlama başarısız. Email adresinizi kontrol edin.");
-                        }
-                    });
         });
     }
 
@@ -150,19 +85,12 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.requestFocus();
             return false;
         }
-
-        if (password.length() < 6) {
-            etPassword.setError("Şifre en az 6 karakter olmalı");
-            etPassword.requestFocus();
-            return false;
-        }
         return true;
     }
 
-    private void saveCredentials(String email, String password) {
+    private void saveCredentials(String email) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email", email);
-        editor.putString("password", password);
         editor.apply();
     }
 
@@ -178,3 +106,4 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 }
+

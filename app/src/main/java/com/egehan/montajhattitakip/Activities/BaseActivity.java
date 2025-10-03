@@ -14,14 +14,14 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (currentUser == null) {
-            // Kullanıcı giriş yapmamışsa LoginActivity'ye yönlendir
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        }
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        if (currentUser == null) {
+//            // Kullanıcı giriş yapmamışsa LoginActivity'ye yönlendir
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(intent);
+//            finish();
+//        }
     }
 }

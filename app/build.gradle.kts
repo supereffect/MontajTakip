@@ -57,7 +57,11 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
 
     implementation("com.google.firebase:firebase-firestore")
-    implementation ("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth")
     implementation("com.google.dagger:hilt-android:2.52")
     annotationProcessor("com.google.dagger:hilt-compiler:2.52")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+    implementation("com.google.firebase:firebase-config:22.1.2")
 }
+

@@ -1,98 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/colorBackground"
-    android:padding="24dp"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Logo veya App İsmi -->
-    <TextView
-        android:text="Montaj Takip"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginBottom="32dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!-- Arka plan resmi -->
+    <ImageView
+        android:id="@+id/bgImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:alpha="0.5" />
 
-    <!-- Giriş Kartı -->
+    <!-- Asıl içerik -->
     <LinearLayout
         android:orientation="vertical"
-        android:background="@android:color/white"
-        android:elevation="4dp"
-        android:padding="20dp"
-        android:layout_margin="16dp"
+        android:gravity="center"
+        android:padding="24dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
+        <!-- Logo veya App İsmi -->
         <TextView
-            android:text="E Mail"
-            android:textSize="14sp"
+            android:text="Montaj Takip"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/colorTextPrimary"
-            android:layout_marginBottom="6dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/etEmail"
+        <!-- Giriş Kartı -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:padding="20dp"
+            android:layout_margin="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
-            android:hint="Email" />
+            android:layout_height="wrap_content">
 
-        <TextView
+            <TextView
+                android:text="Kullanıcı Adı"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextPrimary"
+                android:layout_marginBottom="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-            android:text="Şifre"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorTextPrimary"
-            android:layout_marginBottom="6dp"
-            android:layout_marginTop="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:hint="" />
 
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:background="@drawable/edittext_background"
-            android:layout_height="wrap_content"
-            android:hint="Şifre"
-            android:inputType="textPassword" />
+            <TextView
+                android:visibility="gone"
+                android:text="Şifre"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextPrimary"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <!-- Hata Mesajı için TextView -->
-        <TextView
-            android:id="@+id/tvErrorMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_red_dark"
-            android:visibility="gone"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp" />
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:background="@drawable/edittext_background"
+                android:layout_height="wrap_content"
+                android:hint="Şifre"
+                android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:text="Giriş Yap"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="60dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@android:color/white"/>
+            <!-- Hata Mesajı -->
+            <TextView
+                android:id="@+id/tvErrorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kayıt Ol" />
-        <Button
-            android:id="@+id/btnForgotPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Şifremi Unuttum"
-       />
+            <Button
+                android:id="@+id/btnLogin"
+                android:text="Giriş Yap"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kayıt Ol" />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btnForgotPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Şifremi Unuttum" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <!-- Sağ üst köşedeki yazı -->
+    <TextView
+        android:id="@+id/tvDesignedBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Designed by Erbaa Ç."
+        android:textSize="10sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="top|end"
+        android:padding="6dp"/>
+</FrameLayout>
