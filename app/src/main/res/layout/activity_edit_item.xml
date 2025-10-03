@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:enabled="false" />
 
         <!-- İşlem Tipi -->
         <TextView
@@ -34,12 +35,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/etType"
+        <RadioGroup
+            android:id="@+id/radioGroupType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
-            android:padding="8dp" />
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioYereAl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yere Al" />
+
+            <RadioButton
+                android:id="@+id/radioHattaYukle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hatta Yükle" />
+
+            <RadioButton
+                android:id="@+id/radioSokum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Söküm" />
+        </RadioGroup>
 
         <!-- Barkod -->
         <TextView
@@ -80,12 +99,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/etHat"
+        <RadioGroup
+            android:id="@+id/radioGroupHat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
-            android:padding="8dp" />
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioHat1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hat 1" />
+
+            <RadioButton
+                android:id="@+id/radioHat2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hat 2" />
+
+            <RadioButton
+                android:id="@+id/radioHat3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hat 3" />
+        </RadioGroup>
 
         <!-- Neden -->
         <TextView

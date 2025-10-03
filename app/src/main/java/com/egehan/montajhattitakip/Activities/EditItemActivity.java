@@ -1,92 +1,147 @@
 package com.egehan.montajhattitakip.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-
+import androidx.annotation.Nullable;
 
 import com.egehan.montajhattitakip.Model.Record;
 import com.egehan.montajhattitakip.R;
-import com.google.gson.Gson;
+import com.egehan.montajhattitakip.Repository.Abstract.IRepositoryCallback;
+import com.egehan.montajhattitakip.Repository.Concrete.RecordRepository;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+@AndroidEntryPoint
 
 public class EditItemActivity extends BaseActivity {
-    EditText etUsername, etType, etBarcode, etHat, etReason;
-    Button btnSave,btnScanBarcode;
-    SharedPreferences prefs;
-    Gson gson = new Gson();
-    List<Record> list;
-    int recordIndex;
+
+    EditText etUsername, etBarcode, etReason;
+    Button btnSave, btnScanBarcode;
+    RadioGroup radioGroupType, radioGroupHat;
+    RadioButton radioYereAl, radioHattaYukle, radioSokum;
+
+    @Inject
+    RecordRepository recordRepository;
+
+    Record currentRecord;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
         etUsername = findViewById(R.id.etUsername);
-        etType = findViewById(R.id.etType);
         etBarcode = findViewById(R.id.etBarcode);
-        btnScanBarcode = findViewById(R.id.btnScanBarcode);
-        etHat = findViewById(R.id.etHat);
         etReason = findViewById(R.id.etReason);
+        btnScanBarcode = findViewById(R.id.btnScanBarcode);
         btnSave = findViewById(R.id.btnSave);
 
-        prefs = getSharedPreferences("AppData", MODE_PRIVATE);
+        radioGroupType = findViewById(R.id.radioGroupType);
+        radioGroupHat = findViewById(R.id.radioGroupHat);
 
-        // Kayıtları al
-        String json = prefs.getString("records", "[]");
-        Record[] recordsArray = gson.fromJson(json, Record[].class);
-        list = new ArrayList<>();
-        if (recordsArray != null) {
-            list.addAll(Arrays.asList(recordsArray));
+        radioYereAl = findViewById(R.id.radioYereAl);
+        radioHattaYukle = findViewById(R.id.radioHattaYukle);
+        radioSokum = findViewById(R.id.radioSokum);
+
+        String recordId = getIntent().getStringExtra("record_id");
+        if (recordId != null && !recordId.isEmpty()) {
+            loadRecordById(recordId);
         }
 
-        // Gelen veriyi al
-        recordIndex = getIntent().getIntExtra("record_index", -1);
-        String recordJson = getIntent().getStringExtra("record_data");
-        Record record = gson.fromJson(recordJson, Record.class);
+        btnSave.setOnClickListener(v -> saveRecord());
+        btnScanBarcode.setOnClickListener(v -> scanBarcode());
+    }
 
-        // EditText'lere doldur
-        if (record != null) {
-            etUsername.setText(record.getUsername());
-            etType.setText(record.getType());
-            etBarcode.setText(record.getBarcode());
-            etHat.setText(record.getHat());
-            etReason.setText(record.getReason());
-        }
+    private void loadRecordById(String recordId) {
+        recordRepository.getRecordById(recordId, new IRepositoryCallback<Record>() {
+            @Override
+            public void onStart() {}
 
-        // Kaydet butonu
-        btnSave.setOnClickListener(v -> {
-            if (recordIndex >= 0 && recordIndex < list.size()) {
-                Record updated = list.get(recordIndex);
-                updated.setUsername(etUsername.getText().toString());
-                updated.setType(etType.getText().toString());
-                updated.setBarcode(etBarcode.getText().toString());
-                updated.setHat(etHat.getText().toString());
-                updated.setReason(etReason.getText().toString());
+            @Override
+            public void onComplete(Record record) {
+                if (record != null) {
+                    currentRecord = record;
+                    etUsername.setText(record.getUsername());
+                    etBarcode.setText(record.getBarcode());
+                    etReason.setText(record.getReason());
 
-                prefs.edit().putString("records", gson.toJson(list)).apply();
-                finish(); // geri dön
+                    // İşlem tipi setleme
+                    if ("Yere Al".equals(record.getType())) radioYereAl.setChecked(true);
+                    else if ("Hatta Yükle".equals(record.getType())) radioHattaYukle.setChecked(true);
+                    else if ("Söküm".equals(record.getType())) radioSokum.setChecked(true);
+
+                    // Hat setleme
+                    if ("Hat 1".equals(record.getHat())) radioGroupHat.check(R.id.radioHat1);
+                    else if ("Hat 2".equals(record.getHat())) radioGroupHat.check(R.id.radioHat2);
+                    else if ("Hat 3".equals(record.getHat())) radioGroupHat.check(R.id.radioHat3);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(EditItemActivity.this, "Kayıt yüklenirken hata oluştu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        btnScanBarcode.setOnClickListener(v -> {
-            IntentIntegrator integrator = new IntentIntegrator(this);
-            integrator.setPrompt("Barkod okut");
-            integrator.setBeepEnabled(true);
-            integrator.setCaptureActivity(PortraitCaptureActivity.class);
-            integrator.initiateScan();
-        });
     }
+
+    private void saveRecord() {
+        if (currentRecord != null) {
+            currentRecord.setBarcode(etBarcode.getText().toString());
+            currentRecord.setReason(etReason.getText().toString());
+
+            // İşlem tipi al
+            int selectedTypeId = radioGroupType.getCheckedRadioButtonId();
+            RadioButton selectedType = findViewById(selectedTypeId);
+            currentRecord.setType(selectedType.getText().toString());
+
+            // Hat tipi al
+            int selectedHatId = radioGroupHat.getCheckedRadioButtonId();
+            RadioButton selectedHat = findViewById(selectedHatId);
+            currentRecord.setHat(selectedHat.getText().toString());
+
+            recordRepository.saveRecord(
+                    currentRecord.getType(),
+                    currentRecord.getBarcode(),
+                    currentRecord.getHat(),
+                    currentRecord.getReason(),
+                    new IRepositoryCallback<Void>() {
+                        @Override
+                        public void onStart() {}
+
+                        @Override
+                        public void onComplete(Void unused) {
+                            Toast.makeText(EditItemActivity.this, "Kayıt güncellendi", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Toast.makeText(EditItemActivity.this, "Kayıt güncellenirken hata oluştu: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "Kayıt yüklenmedi.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void scanBarcode() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setPrompt("Barkod okut");
+        integrator.setBeepEnabled(true);
+        integrator.setCaptureActivity(PortraitCaptureActivity.class);
+        integrator.initiateScan();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);

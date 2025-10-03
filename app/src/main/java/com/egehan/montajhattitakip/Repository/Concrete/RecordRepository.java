@@ -11,6 +11,7 @@ import com.egehan.montajhattitakip.Repository.Abstract.IRepositoryCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -112,20 +113,22 @@ public class RecordRepository {
 
     // Barcode’a göre güncel kayıt çekme
     public void getRecordByBarcode(String barcode, final IRepositoryCallback<Record> callback) {
-        callback.onStart(); // Progress başlat
+        callback.onStart();
 
-        recordsRef.document(barcode).get()
+        historyRef
+                .whereEqualTo("barcode", barcode)
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
-
-                        System.out.println("Firestore doc id: " + task.getResult().getId());
-                        System.out.println("Firestore raw data: " + task.getResult().getData());
+                    if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
+                        DocumentSnapshot doc = task.getResult().getDocuments().get(0);
 
                         try {
-                            Record record = task.getResult().toObject(Record.class);
-                            callback.onComplete(record); // Başarılı dönüş
+                            Record record = doc.toObject(Record.class);
+                            record.setId(doc.getId());
+                            callback.onComplete(record);
                         } catch (Exception e) {
-                            System.err.println("Record dönüşüm hatası: " + e.getMessage());
                             e.printStackTrace();
                             callback.onError(e);
                         }
@@ -218,6 +221,23 @@ public class RecordRepository {
                     callback.onComplete(new ArrayList<>(latestRecordsMap.values()));
                 });
     }
+
+    public void getRecordById(String id, final IRepositoryCallback<Record> callback) {
+        callback.onStart();
+
+        historyRef.document(id).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+                        Record record = task.getResult().toObject(Record.class);
+                        record.setId(task.getResult().getId());
+                        callback.onComplete(record);
+                    } else {
+                        Exception e = task.getException() != null ? task.getException() : new Exception("Kayıt bulunamadı");
+                        callback.onError(e);
+                    }
+                });
+    }
+
 
     // Listener arayüzleri
 }

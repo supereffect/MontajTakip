@@ -100,10 +100,10 @@
             android:padding="10dp" />
 
         <LinearLayout
-            android:layout_marginBottom="60dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:layout_marginBottom="60dp"
             android:orientation="horizontal">
 
             <CheckBox
@@ -142,7 +142,6 @@
             android:textStyle="bold" />
 
 
-
         <Button
             android:id="@+id/btnHattaYukle"
             android:layout_width="match_parent"
@@ -161,6 +160,7 @@
             android:backgroundTint="@color/colorAccent"
             android:text="📑 Kayıtlar"
             android:textColor="@android:color/white" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -168,48 +168,87 @@
             android:background="@color/colorAccent" />
 
         <LinearLayout
-            android:id="@+id/llSummaryInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:background="@color/common_google_signin_btn_text_dark_default">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvYerdekiUrunSayisi"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Yerde: 0"
+                android:text="Yerdeki Ürün Sayıları:"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/tvHattakiUrunSayisi"
-                android:layout_width="0dp"
+                android:textStyle="bold"
+                />
+            <LinearLayout
+                android:id="@+id/llSummaryInfo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Hatta: 0"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:background="@color/common_google_signin_btn_text_dark_default"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tvYerdekiUrunSayisi1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hat 1: 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvYerdekiUrunSayisi2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hat 2: 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvYerdekiUrunSayisi3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hat 3: 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvHattakiUrunSayisi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hatta: 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
 
-            <TextView
-                android:visibility="gone"
+                <TextView
+                    android:id="@+id/tvSokulenUrunSayisi"
 
-                android:id="@+id/tvSokulenUrunSayisi"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sökülmüş: 0"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sökülmüş: 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
+            </LinearLayout>
         </LinearLayout>
+
+
+
+
     </LinearLayout>
 </ScrollView>

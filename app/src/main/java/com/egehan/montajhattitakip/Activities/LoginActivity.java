@@ -44,6 +44,10 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             var asdas = e;
         }
+
+
+
+
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);

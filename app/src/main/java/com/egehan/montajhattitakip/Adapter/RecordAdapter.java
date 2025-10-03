@@ -51,12 +51,12 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         Button btnDelete = convertView.findViewById(R.id.btnDelete);
 
         btnEdit.setOnClickListener(v -> {
-            Toast.makeText(context, "Admin yetkisi gerekli!", Toast.LENGTH_SHORT).show();
-//
-//            Intent intent = new Intent(context, EditItemActivity.class);
-//            intent.putExtra("record_index", position); // hangi kaydı düzenlediğimizi gönderdik
-//            intent.putExtra("record_data", gson.toJson(record)); // kaydı JSON olarak gönderdik
-//            context.startActivity(intent);
+//            Toast.makeText(context, "Admin yetkisi gerekli!", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(context, EditItemActivity.class);
+            intent.putExtra("record_id", record.getId()); // sadece id gönderiyoruz
+            context.startActivity(intent);
+
         });
 
         btnDelete.setOnClickListener(v -> {

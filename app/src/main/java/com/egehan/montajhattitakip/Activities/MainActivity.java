@@ -50,7 +50,7 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity {
     EditText etBarcode, etReason;
     LinearLayout llSummaryInfo;
-    TextView tvYerdekiUrunSayisi, tvHattakiUrunSayisi, tvSokulenUrunSayisi;
+    TextView tvYerdekiUrunSayisi1,tvYerdekiUrunSayisi2,tvYerdekiUrunSayisi3, tvHattakiUrunSayisi, tvSokulenUrunSayisi;
     CheckBox chkRemoved;
     Button btnScan, btnYereAl, btnHattaYukle, btnHistory;
     SharedPreferences prefs;
@@ -81,7 +81,9 @@ public class MainActivity extends BaseActivity {
         btnHattaYukle = findViewById(R.id.btnHattaYukle);
         btnHistory = findViewById(R.id.btnHistory);
         chkRemoved = findViewById(R.id.chkRemoved);
-        tvYerdekiUrunSayisi = findViewById(R.id.tvYerdekiUrunSayisi);
+        tvYerdekiUrunSayisi1 = findViewById(R.id.tvYerdekiUrunSayisi1);
+        tvYerdekiUrunSayisi2 = findViewById(R.id.tvYerdekiUrunSayisi2);
+        tvYerdekiUrunSayisi3 = findViewById(R.id.tvYerdekiUrunSayisi3);
         tvHattakiUrunSayisi = findViewById(R.id.tvHattakiUrunSayisi);
         tvSokulenUrunSayisi = findViewById(R.id.tvSokulenUrunSayisi);
         llSummaryInfo = findViewById(R.id.llSummaryInfo);
@@ -208,27 +210,27 @@ public class MainActivity extends BaseActivity {
 
 
     private void updateProductCounts(List<Record> records) {
-        int yerdeki = 0;
-        int hattaki = 0;
-        int sokulen = 0;
+        int yerdekiHat1 = 0;
+        int yerdekiHat2 = 0;
+        int yerdekiHat3 = 0;
+
 
         for (Record record : records) {
-            if ("Yere Al".equals(record.getType())) {
-                yerdeki++;
-                alarmSummaryInfoLL();
-            }
-            else if ("Hatta Yükle".equals(record.getType())) {
-                hattaki++;
-//                alarmSummaryInfoLL();
-            } else if ("Söküm".equals(record.getType())) {
-                sokulen++;
-//                alarmSummaryInfoLL();
+            String type = record.getType();
+            String hat = record.getHat();
+
+            if ("Yere Al".equals(type)) {
+                if ("Hat 1".equals(hat)) yerdekiHat1++;
+                else if ("Hat 2".equals(hat)) yerdekiHat2++;
+                else if ("Hat 3".equals(hat)) yerdekiHat3++;
             }
         }
 
-        tvYerdekiUrunSayisi.setText("Yerdeki Ürün Sayısı: " + yerdeki);
-//        tvHattakiUrunSayisi.setText("Hattaki " + hattaki);
-//        tvSokulenUrunSayisi.setText("Sökülmüş " + sokulen);
+        // TextView’lere yaz
+        tvYerdekiUrunSayisi1.setText("Hat 1: " + yerdekiHat1);
+        tvYerdekiUrunSayisi2.setText("Hat 2: " + yerdekiHat2);
+        tvYerdekiUrunSayisi3.setText("Hat 3: " + yerdekiHat3);
+
     }
 
     private void showProgress() {
@@ -287,7 +289,7 @@ public class MainActivity extends BaseActivity {
                 currentBarcodeEditText.setText(barcodeContent);
                 Toast.makeText(this, "Barkod okundu: " + barcodeContent, Toast.LENGTH_SHORT).show();
                 currentBarcodeEditText = null;
-
+                barcodeContent = "8693239203308";
                 // Repository'den kayıt çekme
                 repository.getRecordByBarcode(barcodeContent, new IRepositoryCallback<Record>() {
                     @Override
