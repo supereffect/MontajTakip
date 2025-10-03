@@ -1,7 +1,6 @@
 package com.egehan.montajhattitakip.Adapter;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,25 +10,30 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.egehan.montajhattitakip.EditItemActivity;
+import com.egehan.montajhattitakip.Activities.EditItemActivity;
 import com.egehan.montajhattitakip.Model.Record;
 import com.egehan.montajhattitakip.R;
+import com.egehan.montajhattitakip.Repository.Abstract.IRepositoryCallback;
+import com.egehan.montajhattitakip.Repository.Concrete.RecordRepository;
 import com.google.gson.Gson;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class RecordAdapter extends ArrayAdapter<Record> {
     private Context context;
     private List<Record> records;
-    private SharedPreferences prefs;
     private Gson gson = new Gson();
-
-    public RecordAdapter(Context context, List<Record> records, SharedPreferences prefs) {
+    @Inject
+    RecordRepository repository;
+    public RecordAdapter(Context context, List<Record> records, RecordRepository repository) {
         super(context, 0, records);
         this.context = context;
         this.records = records;
-        this.prefs = prefs;
+        this.repository = repository; // Hilt değil manuel inject
     }
 
     @Override
@@ -47,22 +51,42 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         Button btnDelete = convertView.findViewById(R.id.btnDelete);
 
         btnEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(context, EditItemActivity.class);
-            intent.putExtra("record_index", position); // hangi kaydı düzenlediğimizi gönderdik
-            intent.putExtra("record_data", gson.toJson(record)); // kaydı JSON olarak gönderdik
-            context.startActivity(intent);
+            Toast.makeText(context, "Admin yetkisi gerekli!", Toast.LENGTH_SHORT).show();
+//
+//            Intent intent = new Intent(context, EditItemActivity.class);
+//            intent.putExtra("record_index", position); // hangi kaydı düzenlediğimizi gönderdik
+//            intent.putExtra("record_data", gson.toJson(record)); // kaydı JSON olarak gönderdik
+//            context.startActivity(intent);
         });
 
         btnDelete.setOnClickListener(v -> {
-            records.remove(position);
-            saveRecords();
-            notifyDataSetChanged();
+            Toast.makeText(context, "Admin yetkisi gerekli!", Toast.LENGTH_SHORT).show();
+
+//            deleteRecord(record.getId(), position);
         });
 
         return convertView;
     }
 
-    private void saveRecords() {
-        prefs.edit().putString("records", gson.toJson(records)).apply();
+    private void deleteRecord(String recordId, int position) {
+        repository.deleteRecordById(recordId, new IRepositoryCallback<Void>() {
+            @Override
+            public void onStart() {
+                // ProgressBar gösterebilirsin
+            }
+
+            @Override
+            public void onComplete(Void result) {
+                records.remove(position);
+                notifyDataSetChanged();
+                Toast.makeText(context, "Kayıt silindi", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(context, "Silme hatası: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 }

@@ -1,6 +1,7 @@
 package com.egehan.montajhattitakip.Model;
 
 public class Record {
+    private String id; //Firestore ID
     private String username;
     private String type;
     private String barcode;
@@ -8,8 +9,9 @@ public class Record {
     private String reason;
     private String timestamp;
     private String shift;
-
-    public Record(String username, String type, String barcode, String hat, String reason, String timestamp,String shift) {
+    public Record() {}
+    public Record(String id,String username, String type, String barcode, String hat, String reason, String timestamp,String shift) {
+        this.id = id;
         this.username = username;
         this.type = type;
         this.barcode = barcode;
@@ -18,7 +20,8 @@ public class Record {
         this.timestamp = timestamp;
         this.shift = shift;
     }
-
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getUsername() {
         return username;
     }

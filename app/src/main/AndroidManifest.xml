@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Firestore ve internet için gerekli -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,26 +18,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MontajHattiTakip"
         tools:targetApi="31">
+
         <activity
-            android:name=".EditItemActivity"
+            android:name=".Activities.EditItemActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.HistoryActivity" />
+        </activity>
+
+        <activity
+            android:name=".Activities.PortraitCaptureActivity"
             android:exported="false" />
+
         <activity
-            android:name=".PortraitCaptureActivity"
-            android:exported="false" />
+            android:name=".Activities.HistoryActivity"
+            android:exported="false"
+            android:parentActivityName=".Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MainActivity" />
+        </activity>
+
         <activity
-            android:name=".HistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait" />

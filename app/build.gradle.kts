@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android") // ✅ Hilt plugin
 }
 
 android {
@@ -11,7 +13,7 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,6 +27,16 @@ android {
             )
         }
     }
+
+    applicationVariants.all {
+        outputs.all {
+            if (buildType.name == "release") {
+                (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+                    "MontajTakip_v${versionName}.apk"
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -32,14 +44,20 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("org.apache.poi:poi:5.2.3")
     implementation("org.apache.poi:poi-ooxml:5.2.3")
 
+    implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
+
+    implementation("com.google.firebase:firebase-firestore")
+    implementation ("com.google.firebase:firebase-auth")
+    implementation("com.google.dagger:hilt-android:2.52")
+    annotationProcessor("com.google.dagger:hilt-compiler:2.52")
 }

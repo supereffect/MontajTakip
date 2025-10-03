@@ -1,46 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/colorBackground"
-    android:padding="12dp"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
-    <!-- Liste -->
-    <ListView
-        android:id="@+id/listView"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.8dp"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
-
-    <!-- Alt Butonlar -->
+    <!-- Ana içerik -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="12dp"
+        android:orientation="vertical"
+        android:padding="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnClear"
-            android:text="🗑️ Tümünü Sil"
-            android:backgroundTint="@color/colorAccent"
-            android:textColor="@android:color/white"
-            android:layout_margin="6dp"
-            android:layout_width="0dp"
+        <!-- Liste -->
+        <ListView
+            android:id="@+id/listView"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.8dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
 
-        <Button
-            android:id="@+id/btnExport"
-            android:text="📊 Excel'e Aktar"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@android:color/white"
-            android:layout_margin="6dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+        <!-- Alt Butonlar -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btnClear"
+                android:text="🗑️ Tümünü Sil"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:layout_margin="6dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btnExport"
+                android:text="📊 Excel'e Aktar"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:layout_margin="6dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <!-- Ortada ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+</FrameLayout>
