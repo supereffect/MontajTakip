@@ -187,6 +187,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvHattakiUrunSayisi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -196,7 +197,10 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+
             <TextView
+                android:visibility="gone"
+
                 android:id="@+id/tvSokulenUrunSayisi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

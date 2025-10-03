@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 
 import com.egehan.montajhattitakip.Model.Record;
 import com.egehan.montajhattitakip.Repository.Abstract.IRepositoryCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -28,8 +30,6 @@ import javax.inject.Singleton; // ✅ düzeltme
 @Singleton
 
 public class RecordRepository {
-    private static final String PREFS_NAME = "AppData";
-    private static final String KEY_USERNAME = "username";
 
 
     private FirebaseFirestore db;
@@ -51,8 +51,6 @@ public class RecordRepository {
 
         callback.onStart();
 
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String username = prefs.getString(KEY_USERNAME, "Unknown");
 
         if (barcode == null || barcode.trim().isEmpty()) {
             callback.onError(new Exception("Barcode boş olamaz"));
@@ -77,8 +75,8 @@ public class RecordRepository {
 
         // Yeni Document Reference oluştur (Firestore ID alınacak)
         String docId = historyRef.document().getId();
-
-        Record record = new Record(docId, username, type, barcode, hat, reason, timestamp, shift);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Record record = new Record(docId, user.getEmail(), type, barcode, hat, reason, timestamp, shift);
 
         // Güncel kayıtlar
         recordsRef.document(barcode)

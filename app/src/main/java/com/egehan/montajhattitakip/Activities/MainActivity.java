@@ -47,7 +47,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import javax.inject.Inject;
 
 @AndroidEntryPoint
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     EditText etBarcode, etReason;
     LinearLayout llSummaryInfo;
     TextView tvYerdekiUrunSayisi, tvHattakiUrunSayisi, tvSokulenUrunSayisi;
@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
         }, 2000); // 2000ms = 2 saniye
 
         // Bip sesi çalma
-        android.media.ToneGenerator toneGen = new android.media.ToneGenerator(android.media.AudioManager.STREAM_NOTIFICATION, 100);
-        toneGen.startTone(android.media.ToneGenerator.TONE_PROP_BEEP, 100); // 500ms bip
+//        android.media.ToneGenerator toneGen = new android.media.ToneGenerator(android.media.AudioManager.STREAM_NOTIFICATION, 100);
+//        toneGen.startTone(android.media.ToneGenerator.TONE_PROP_BEEP, 100); // 500ms bip
 
         // Titreşim ekleme
         android.os.Vibrator vibrator = (android.os.Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -216,18 +216,19 @@ public class MainActivity extends AppCompatActivity {
             if ("Yere Al".equals(record.getType())) {
                 yerdeki++;
                 alarmSummaryInfoLL();
-            } else if ("Hatta Yükle".equals(record.getType())) {
+            }
+            else if ("Hatta Yükle".equals(record.getType())) {
                 hattaki++;
-                alarmSummaryInfoLL();
+//                alarmSummaryInfoLL();
             } else if ("Söküm".equals(record.getType())) {
                 sokulen++;
-                alarmSummaryInfoLL();
+//                alarmSummaryInfoLL();
             }
         }
 
-        tvYerdekiUrunSayisi.setText("Yerdeki " + yerdeki);
-        tvHattakiUrunSayisi.setText("Hattaki " + hattaki);
-        tvSokulenUrunSayisi.setText("Sökülmüş " + sokulen);
+        tvYerdekiUrunSayisi.setText("Yerdeki Ürün Sayısı: " + yerdeki);
+//        tvHattakiUrunSayisi.setText("Hattaki " + hattaki);
+//        tvSokulenUrunSayisi.setText("Sökülmüş " + sokulen);
     }
 
     private void showProgress() {

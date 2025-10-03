@@ -7,7 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+
+
 
 import com.egehan.montajhattitakip.Model.Record;
 import com.egehan.montajhattitakip.R;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditItemActivity extends AppCompatActivity {
+public class EditItemActivity extends BaseActivity {
     EditText etUsername, etType, etBarcode, etHat, etReason;
     Button btnSave,btnScanBarcode;
     SharedPreferences prefs;

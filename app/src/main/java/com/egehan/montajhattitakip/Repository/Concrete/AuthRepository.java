@@ -32,15 +32,28 @@ public class AuthRepository {
 
     public void register(String email, String password, IRepositoryCallback<FirebaseUser> callback) {
         callback.onStart();
-        mAuth.createUserWithEmailAndPassword(email, password)
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
-                        callback.onComplete(mAuth.getCurrentUser());
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            user.sendEmailVerification()
+                                    .addOnCompleteListener(verifyTask -> {
+                                        if (verifyTask.isSuccessful()) {
+                                            callback.onComplete(user);
+                                        } else {
+                                            callback.onError(verifyTask.getException());
+                                        }
+                                    });
+                        } else {
+                            callback.onError(new Exception("Kullanıcı oluşturulamadı"));
+                        }
                     } else {
-                        callback.onError(task.getException() != null ? task.getException() : new Exception("Kayıt başarısız"));
+                        callback.onError(task.getException());
                     }
                 });
     }
+
 
     public FirebaseUser getCurrentUser() {
         return mAuth.getCurrentUser();

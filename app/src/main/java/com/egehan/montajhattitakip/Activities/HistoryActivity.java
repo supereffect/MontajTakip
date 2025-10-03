@@ -37,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import javax.inject.Inject;
 
 @AndroidEntryPoint
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends BaseActivity {
     ListView listView;
     Button btnExport, btnClear;
 
