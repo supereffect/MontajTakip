@@ -51,5 +51,10 @@ public class MyApp extends Application {
             return mFirebaseRemoteConfig.getString("wallpaperurl");
         }
         return "";
+    } public static String getWallpaperParamter() {
+        if (mFirebaseRemoteConfig != null) {
+            return mFirebaseRemoteConfig.getString("wallpaperParamter");
+        }
+        return "";
     }
 }

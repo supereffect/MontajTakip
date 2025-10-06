@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.egehan.montajhattitakip.Activities.EditItemActivity;
+import com.egehan.montajhattitakip.Activities.LoginActivity;
 import com.egehan.montajhattitakip.Model.Record;
 import com.egehan.montajhattitakip.R;
 import com.egehan.montajhattitakip.Repository.Abstract.IRepositoryCallback;
@@ -29,6 +30,7 @@ public class RecordAdapter extends ArrayAdapter<Record> {
     private Gson gson = new Gson();
     @Inject
     RecordRepository repository;
+
     public RecordAdapter(Context context, List<Record> records, RecordRepository repository) {
         super(context, 0, records);
         this.context = context;
@@ -60,9 +62,11 @@ public class RecordAdapter extends ArrayAdapter<Record> {
         });
 
         btnDelete.setOnClickListener(v -> {
-            Toast.makeText(context, "Admin yetkisi gerekli!", Toast.LENGTH_SHORT).show();
+            if (LoginActivity.email.equals("admin"))
+                deleteRecord(record.getId(), position);
+            else
+                Toast.makeText(context, "Admin yetkisi gerekli!", Toast.LENGTH_SHORT).show();
 
-//            deleteRecord(record.getId(), position);
         });
 
         return convertView;
@@ -77,7 +81,7 @@ public class RecordAdapter extends ArrayAdapter<Record> {
 
             @Override
             public void onComplete(Void result) {
-                records.remove(position);
+//                recor ds.remove(position);
                 notifyDataSetChanged();
                 Toast.makeText(context, "Kayıt silindi", Toast.LENGTH_SHORT).show();
             }
